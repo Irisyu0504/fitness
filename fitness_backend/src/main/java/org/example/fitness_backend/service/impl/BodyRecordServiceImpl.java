@@ -37,7 +37,7 @@ public class BodyRecordServiceImpl extends ServiceImpl<BodyRecordMapper, BodyRec
     public void calculateAndSetBmi(BodyRecord record) {
         record.setBmi(null);
         if (record.getWeight() != null && record.getUserId() != null) {
-            User user =userMapper.selectById(record.getUserId());
+            User user = userMapper.selectById(record.getUserId());
             if(user != null && user.getHeight() != null && user.getHeight().compareTo(BigDecimal.ZERO) > 0){
                 BigDecimal heightInMeter = user.getHeight().divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
                 BigDecimal heightSquared = heightInMeter.multiply(heightInMeter);

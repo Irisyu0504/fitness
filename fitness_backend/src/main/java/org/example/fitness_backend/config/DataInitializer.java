@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.example.fitness_backend.entity.*;
 import org.example.fitness_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -36,10 +37,13 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private JdbcTemplate jdbcTemplate;
 
+    @Value("${app.admin.password:Admin@2026!}")
+    private String adminPassword;
+
     @Override
     public void run(String... args) {
         ensureVipColumn();
-        User admin = ensureUser("admin", "yxrs0504", "管理员", "admin", 175.0);
+        User admin = ensureUser("admin", adminPassword, "管理员", "admin", 175.0);
 
         // VIP 会员用户（到期时间在未来）
         User testUser = ensureUser("testuser", "Test@2026!", "健身达人", "user", 178.0);

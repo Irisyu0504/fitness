@@ -30,6 +30,6 @@ mybatis-plus:
 
 ai:
   deepseek:
-    api-key: ${DEEPSEEK_API_KEY:sk-3ebe2fe8c4f242e7b1ce1022ce24a74e}
+    api-key: ${DEEPSEEK_API_KEY}
     base-url: https://api.deepseek.com
     model: deepseek-chat

@@ -9,6 +9,7 @@ import org.example.fitness_backend.service.BodyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +44,14 @@ public class BodyRecordController {
     }
 
     @DeleteMapping("/{id}")
-    public Result<String> deleteRecord(@PathVariable Long id) {
-        boolean success = bodyRecordService.removeById(id);
-        return success ? Result.success("身体数据删除成功", null) : Result.error(500, "身体数据删除失败");
+    public Result<String> deleteRecord(@PathVariable Long id, HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+
+        QueryWrapper<BodyRecord> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id).eq("user_id", userId);
+
+        boolean success = bodyRecordService.remove(queryWrapper);
+        return success ? Result.success("身体数据删除成功", null) : Result.error(403, "删除失败，记录不存在或无权操作");
     }
 
     @GetMapping
@@ -74,7 +80,7 @@ public class BodyRecordController {
     public Result<List<BodyRecord>> getTrendData(@RequestParam(defaultValue = "30") Integer days, HttpServletRequest request){
         Long userId = (Long) request.getAttribute("userId");
 
-        java.time.LocalDate startDate = java.time.LocalDate.now().minusDays(days);
+        LocalDate startDate = LocalDate.now().minusDays(days);
 
         QueryWrapper<BodyRecord> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId).ge("record_date", startDate).orderByAsc("record_date");
