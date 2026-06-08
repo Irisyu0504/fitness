@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * 用户实体类。
+ * <p>对应数据库 users 表，存储用户的基本信息、认证信息和会员状态。</p>
+ * <p>ID 策略为雪花算法（ASSIGN_ID），保证分布式环境下的唯一性。</p>
+ */
 @Data
 @TableName("users")
 public class User {

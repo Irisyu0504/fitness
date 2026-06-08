@@ -7,6 +7,11 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * 训练计划实体类。
+ * <p>对应数据库 workout_plans 表，记录用户创建的训练计划，
+ * 可关联健身目标，包含计划名称、频率、起止日期等信息。</p>
+ */
 @Data
 @TableName("workout_plans")
 public class WorkoutPlan {

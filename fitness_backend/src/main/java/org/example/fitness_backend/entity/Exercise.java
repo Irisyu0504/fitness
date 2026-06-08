@@ -7,6 +7,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * 运动动作实体类。
+ * <p>对应数据库 exercises 表，存储运动库的基础数据，
+ * 包括动作名称、目标肌群、难度等级和每分钟消耗热量等信息。</p>
+ */
 @Data
 @TableName("exercises")
 public class Exercise {

@@ -14,6 +14,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * 应用启动时的数据初始化器。
+ * <p>实现 {@code CommandLineRunner}，在 Spring 容器就绪后自动执行：</p>
+ * <ol>
+ *   <li>确保 users 表包含 vip_expire_time 列（兼容旧数据库）</li>
+ *   <li>创建默认管理员账号和测试用户</li>
+ *   <li>为测试用户填充示例数据（体测记录、健身目标、训练记录、饮食记录）</li>
+ * </ol>
+ * <p>所有密码均通过 BCrypt 加密存储，使用 INSERT IGNORE 保证幂等性。</p>
+ */
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -60,11 +70,15 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
+    /**
+     * 确保 users 表包含 vip_expire_time 字段。
+     * 首次运行时执行 ALTER TABLE 添加列，后续运行时列已存在会抛出异常，安全忽略即可。
+     */
     private void ensureVipColumn() {
         try {
             jdbcTemplate.execute("ALTER TABLE `users` ADD COLUMN `vip_expire_time` DATETIME DEFAULT NULL");
         } catch (Exception e) {
-            // 字段已存在，忽略
+            // 列已存在时 MySQL 会抛出 DuplicateColumnException，属于正常情况，无需处理
         }
     }
 

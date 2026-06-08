@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * 体测记录实体类。
+ * <p>对应数据库 body_records 表，记录用户每次体测的身体数据，
+ * 包括体重、体脂率、腰围和 BMI 等指标。</p>
+ */
 @Data
 @TableName("body_records")
 public class BodyRecord {

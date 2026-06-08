@@ -6,7 +6,11 @@
       "Bash(ConvertTo-Csv -NoTypeInformation)",
       "Bash(Out-String)",
       "PowerShell($npmPath = \\(Get-Command npm\\).Source; Write-Host $npmPath)",
-      "PowerShell(npm list *)"
+      "PowerShell(npm list *)",
+      "Bash(python *)",
+      "Bash(powershell *)",
+      "Bash(Remove-Item *)",
+      "Bash(git add *)"
     ]
   }
 }

@@ -7,6 +7,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * 饮食记录实体类。
+ * <p>对应数据库 diet_records 表，记录用户的每餐饮食信息，
+ * 包括食物名称、餐次类型、热量及三大营养素（蛋白质、碳水、脂肪）。</p>
+ */
 @Data
 @TableName("diet_records")
 public class DietRecord {

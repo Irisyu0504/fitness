@@ -8,6 +8,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * 健身目标实体类。
+ * <p>对应数据库 fitness_goals 表，记录用户的健身目标设定，
+ * 包括目标类型（减脂/增肌/塑形）、起止日期和每周目标等。</p>
+ */
 @Data
 @TableName("fitness_goals")
 public class FitnessGoal {

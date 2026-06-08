@@ -2,10 +2,17 @@ package org.example.fitness_backend.common;
 
 import lombok.Data;
 
+/**
+ * 统一 API 响应包装类。
+ * <p>所有 Controller 接口均返回此类型，保证前端接收到一致的数据结构。</p>
+ * <p>成功时 code=200，失败时 code 为对应的 HTTP 状态码或业务错误码。</p>
+ *
+ * @param <T> 响应数据的类型
+ */
 @Data
 public class Result<T> {
     private Integer code;
-    private String msg; //提示信息
+    private String msg;
     private T data;
 
     public static <T> Result<T> success(T data) {
