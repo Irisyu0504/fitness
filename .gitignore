@@ -1,0 +1,18 @@
+# 环境变量（含密码，不能提交）
+.env
+
+# Java
+fitness_backend/target/
+fitness_backend/.idea/
+
+# Node
+fitness_front/node_modules/
+fitness_front/dist/
+
+# Docker 数据卷（运行时生成）
+mysql-data/
+
+# IDE
+.idea/
+*.iml
+.vscode/

@@ -1,0 +1,85 @@
+/* ============================================
+   Core Fitness - 奶油色轻盈 SaaS 主题
+   ============================================ */
+
+:root {
+  /* === 背景色系 === */
+  --bg-primary: #F8F6F3;        /* 奶油白 - 主背景 */
+  --bg-secondary: #F5F7FA;      /* 浅灰蓝 - 次背景 */
+  --bg-card: #FFFFFF;           /* 纯白 - 卡片背景 */
+  --bg-card-hover: #FAFBFC;     /* 极浅灰 - 卡片悬停 */
+  --bg-sidebar: rgba(255, 255, 255, 0.92);  /* 半透明白 - 侧边栏 */
+
+  /* === 主色调 (低饱和度) === */
+  --color-primary: #7EB8DA;     /* 浅蓝 - 主色 */
+  --color-primary-light: #A8D4E6;  /* 浅蓝 - 浅色 */
+  --color-primary-dark: #5A9BC0;   /* 浅蓝 - 深色 */
+  --color-purple: #B8A9C9;      /* 淡紫 */
+  --color-purple-light: #D4C5E2;
+  --color-yellow: #F5D5A0;      /* 柔黄 */
+  --color-yellow-light: #FBE5B6;
+  --color-coral: #F0A8A8;       /* 珊瑚红 */
+  --color-coral-light: #F5C0C0;
+  --color-green: #A8D8B9;       /* 浅绿 */
+  --color-green-light: #C5E8D0;
+
+  /* === 新增暖色调 === */
+  --color-yellow-warm: #ffdb69;     /* 明亮黄 - 标签、高亮 */
+  --color-yellow-warm-light: #ffe99a;
+  --color-orange-pink: #e8a18b;    /* 橙粉色 - 卡片装饰 */
+  --color-orange-pink-light: #f0bfb0;
+  --color-peach: #F5C0A0;          /* 蜜桃色 */
+
+  /* === 文字色系 === */
+  --text-primary: #2D3748;      /* 深灰 - 主文字 */
+  --text-secondary: #718096;    /* 中灰 - 次文字 */
+  --text-tertiary: #A0AEC0;     /* 浅灰 - 辅助文字 */
+  --text-inverse: #FFFFFF;      /* 白色 - 反色文字 */
+
+  /* === 边框 === */
+  --border-light: #E8ECF1;      /* 浅灰边框 */
+  --border-medium: #D1D9E0;     /* 中灰边框 */
+
+  /* === 阴影 === */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.10);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.10);
+
+  /* === 圆角 === */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* === 间距 === */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* === 过渡动画 === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* === 状态色 === */
+  --color-success: #A8D8B9;
+  --color-warning: #ffdb69;     /* 使用新黄色 */
+  --color-danger: #F0A8A8;
+  --color-info: #7EB8DA;
+
+  /* === 图表色板 (更丰富) === */
+  --chart-1: #7EB8DA;  /* 浅蓝 */
+  --chart-2: #e8a18b;  /* 橙粉色 */
+  --chart-3: #ffdb69;  /* 明亮黄 */
+  --chart-4: #B8A9C9;  /* 淡紫 */
+  --chart-5: #A8D8B9;  /* 浅绿 */
+  --chart-6: #F0A8A8;  /* 珊瑚 */
+  --chart-7: #F5D5A0;  /* 柔黄 */
+}

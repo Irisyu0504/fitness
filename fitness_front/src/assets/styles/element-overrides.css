@@ -1,0 +1,232 @@
+/* ============================================
+   Element Plus 浅色主题覆盖
+   ============================================ */
+
+/* === CSS 变量覆盖 === */
+:root {
+  --el-color-primary: #7EB8DA;
+  --el-color-primary-light-3: #9DCEE6;
+  --el-color-primary-light-5: #B8DDEF;
+  --el-color-primary-light-7: #D4E9F5;
+  --el-color-primary-light-9: #EBF4FA;
+  --el-color-primary-dark-2: #6AABC8;
+
+  --el-bg-color: #FFFFFF;
+  --el-bg-color-page: #F8F6F3;
+  --el-bg-color-overlay: #FFFFFF;
+
+  --el-text-color-primary: #2D3748;
+  --el-text-color-regular: #718096;
+  --el-text-color-secondary: #A0AEC0;
+  --el-text-color-placeholder: #A0AEC0;
+
+  --el-border-color: #E8ECF1;
+  --el-border-color-light: #F0F2F5;
+  --el-border-color-lighter: #F5F7FA;
+
+  --el-fill-color: #F5F7FA;
+  --el-fill-color-light: #F8F6F3;
+  --el-fill-color-lighter: #FAFBFC;
+  --el-fill-color-blank: #FFFFFF;
+
+  --el-mask-color: rgba(248, 246, 243, 0.8);
+  --el-mask-color-extra-light: rgba(248, 246, 243, 0.3);
+}
+
+/* === 表格 === */
+.el-table {
+  --el-table-bg-color: #FFFFFF;
+  --el-table-tr-bg-color: #FFFFFF;
+  --el-table-header-bg-color: #F8F6F3;
+  --el-table-row-hover-bg-color: #F5F7FA;
+  --el-table-border-color: #E8ECF1;
+  --el-table-text-color: #2D3748;
+  --el-table-header-text-color: #718096;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.el-table td.el-table__cell {
+  padding: 16px 0;
+}
+
+/* === 分页 === */
+.el-pagination {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-button-bg-color: #F8F6F3;
+  --el-pagination-button-color: #718096;
+  --el-pagination-hover-color: #7EB8DA;
+}
+
+.el-pagination button {
+  border-radius: 10px;
+}
+
+.el-pager li {
+  border-radius: 10px;
+}
+
+/* === 对话框 === */
+.el-dialog {
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+}
+
+.el-dialog__header {
+  padding: 24px 24px 16px;
+}
+
+.el-dialog__title {
+  color: #2D3748;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.el-dialog__body {
+  padding: 16px 24px 24px;
+  color: #2D3748;
+}
+
+/* === 表单 === */
+.el-form-item__label {
+  color: #2D3748;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* === 输入框 === */
+.el-input__wrapper {
+  background: #F8F6F3;
+  border: 1px solid #E8ECF1;
+  border-radius: 12px;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.el-input__wrapper:hover {
+  border-color: #B8DDEF;
+}
+
+.el-input__wrapper.is-focus {
+  border-color: #7EB8DA;
+  box-shadow: 0 0 0 3px rgba(126, 184, 218, 0.12);
+}
+
+.el-input__inner {
+  color: #2D3748;
+}
+
+.el-input__inner::placeholder {
+  color: #A0AEC0;
+}
+
+.el-textarea__inner {
+  background: #F8F6F3;
+  border: 1px solid #E8ECF1;
+  border-radius: 12px;
+  color: #2D3748;
+}
+
+.el-textarea__inner:focus {
+  border-color: #7EB8DA;
+  box-shadow: 0 0 0 3px rgba(126, 184, 218, 0.12);
+}
+
+/* === 选择器 === */
+.el-select .el-input__wrapper {
+  background: #F8F6F3;
+  border: 1px solid #E8ECF1;
+}
+
+.el-select-dropdown {
+  background: #FFFFFF;
+  border: 1px solid #E8ECF1;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.el-select-dropdown__item {
+  color: #2D3748;
+}
+
+.el-select-dropdown__item.is-hovering {
+  background: #F5F7FA;
+}
+
+.el-select-dropdown__item.is-selected {
+  color: #7EB8DA;
+  font-weight: 600;
+}
+
+/* === 日期选择器 === */
+.el-date-editor .el-input__wrapper {
+  background: #F8F6F3;
+  border: 1px solid #E8ECF1;
+}
+
+.el-picker-panel {
+  background: #FFFFFF;
+  border: 1px solid #E8ECF1;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* === 消息提示 === */
+.el-message {
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
+}
+
+.el-message__content {
+  color: #2D3748;
+}
+
+/* === 开关 === */
+.el-switch__core {
+  background: #E8ECF1;
+  border-color: #E8ECF1;
+}
+
+.el-switch.is-checked .el-switch__core {
+  background: #7EB8DA;
+  border-color: #7EB8DA;
+}
+
+/* === 按钮 === */
+.el-button--primary {
+  background: #7EB8DA;
+  border-color: #7EB8DA;
+  border-radius: 12px;
+}
+
+.el-button--primary:hover {
+  background: #9DCEE6;
+  border-color: #9DCEE6;
+}
+
+.el-button--default {
+  background: #FFFFFF;
+  border-color: #E8ECF1;
+  color: #718096;
+  border-radius: 12px;
+}
+
+.el-button--default:hover {
+  border-color: #7EB8DA;
+  color: #7EB8DA;
+}
+
+/* === 数字输入框 === */
+.el-input-number .el-input__wrapper {
+  background: #F8F6F3;
+  border: 1px solid #E8ECF1;
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.fitness_backend.mapper.WorkoutRecordMapper">
+
+    <!-- 多表连接查询：训练记录 + 运动动作 + 训练计划 -->
+    <select id="getRecordDetailByUserId" resultType="java.util.Map">
+        SELECT
+            wr.id,
+            wr.user_id       AS userId,
+            wr.record_date   AS recordDate,
+            wr.duration,
+            wr.sets_count    AS setsCount,
+            wr.reps,
+            wr.calories_burned AS caloriesBurned,
+            wr.exercise_id   AS exerciseId,
+            wr.plan_id       AS planId,
+            e.exercise_name  AS exerciseName,
+            e.muscle_group   AS muscleGroup,
+            e.difficulty,
+            e.calories_per_minute AS caloriesPerMinute,
+            wp.plan_name     AS planName,
+            wp.plan_goal     AS planGoal
+        FROM workout_records wr
+        LEFT JOIN exercises e ON wr.exercise_id = e.id
+        LEFT JOIN workout_plans wp ON wr.plan_id = wp.id
+        WHERE wr.user_id = #{userId}
+        <if test="recordDate != null and recordDate != ''">
+            AND wr.record_date = #{recordDate}
+        </if>
+        <if test="planId != null and planId != ''">
+            AND wr.plan_id = #{planId}
+        </if>
+        ORDER BY wr.record_date DESC, wr.create_time DESC
+    </select>
+
+    <!-- 多表连接查询（分页版） -->
+    <select id="getRecordDetailByUserIdPaged" resultType="java.util.Map">
+        SELECT
+            wr.id,
+            wr.user_id       AS userId,
+            wr.record_date   AS recordDate,
+            wr.duration,
+            wr.sets_count    AS setsCount,
+            wr.reps,
+            wr.calories_burned AS caloriesBurned,
+            wr.exercise_id   AS exerciseId,
+            wr.plan_id       AS planId,
+            e.exercise_name  AS exerciseName,
+            e.muscle_group   AS muscleGroup,
+            e.difficulty,
+            wp.plan_name     AS planName
+        FROM workout_records wr
+        LEFT JOIN exercises e ON wr.exercise_id = e.id
+        LEFT JOIN workout_plans wp ON wr.plan_id = wp.id
+        WHERE wr.user_id = #{userId}
+        <if test="recordDate != null and recordDate != ''">
+            AND wr.record_date = #{recordDate}
+        </if>
+        <if test="planId != null and planId != ''">
+            AND wr.plan_id = #{planId}
+        </if>
+        ORDER BY wr.record_date DESC, wr.create_time DESC
+    </select>
+
+    <!-- 按肌群统计（多表连接 + 聚合） -->
+    <select id="getMuscleStatByUserId" resultType="java.util.Map">
+        SELECT
+            e.muscle_group   AS muscleGroup,
+            COUNT(*)         AS trainCount,
+            SUM(wr.duration) AS totalDuration,
+            SUM(wr.calories_burned) AS totalCalories
+        FROM workout_records wr
+        INNER JOIN exercises e ON wr.exercise_id = e.id
+        WHERE wr.user_id = #{userId}
+        GROUP BY e.muscle_group
+        ORDER BY totalDuration DESC
+    </select>
+
+</mapper>

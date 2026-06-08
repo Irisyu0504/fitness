@@ -1,0 +1,59 @@
+services:
+  # ===== MySQL 数据库 =====
+  mysql:
+    image: mysql:8.0
+    container_name: fitness-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - fitness-net
+
+  # ===== Spring Boot 后端 =====
+  backend:
+    build:
+      context: ./fitness_backend
+      dockerfile: Dockerfile
+    container_name: fitness-backend
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - fitness-net
+
+  # ===== Vue 前端（Nginx） =====
+  frontend:
+    build:
+      context: ./fitness_front
+      dockerfile: Dockerfile
+    container_name: fitness-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - fitness-net
+
+volumes:
+  mysql-data:
+
+networks:
+  fitness-net:
+    driver: bridge
