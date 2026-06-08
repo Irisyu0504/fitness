@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\lx\\\\Desktop\\\\fitness\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(ConvertTo-Csv -NoTypeInformation)",
+      "Bash(Out-String)",
+      "PowerShell($npmPath = \\(Get-Command npm\\).Source; Write-Host $npmPath)",
+      "PowerShell(npm list *)"
+    ]
+  }
+}
