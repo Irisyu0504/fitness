@@ -12,8 +12,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
@@ -81,6 +83,25 @@ class FitnessGoalControllerTest {
                 any(Wrapper.class)
         );
         verify(goalService).removeById(10L);
+    }
+
+    @Test
+    void getFitnessGoalProgressUsesCurrentRequestUser() {
+        FitnessGoalService goalService = mock(FitnessGoalService.class);
+        WorkoutPlanService workoutPlanService = mock(WorkoutPlanService.class);
+        FitnessGoalController controller = controller(goalService, workoutPlanService);
+
+        Map<String, Object> progress = Map.of(
+                "hasGoal", true,
+                "progressRate", 65
+        );
+        when(goalService.calculateGoalProgress(1L)).thenReturn(progress);
+
+        Result<Map<String, Object>> result = controller.getFitnessGoalProgress(requestForUser(1L));
+
+        assertEquals(200, result.getCode());
+        assertSame(progress, result.getData());
+        verify(goalService).calculateGoalProgress(1L);
     }
 
     private FitnessGoalController controller(FitnessGoalService goalService, WorkoutPlanService workoutPlanService) {
