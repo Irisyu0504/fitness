@@ -106,6 +106,7 @@
     </repositories>
 
     <build>
+        <testSourceDirectory>src/test_D/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
