@@ -13,7 +13,7 @@ const packageJson = JSON.parse(
   readFileSync(new URL('../package.json', import.meta.url), 'utf8')
 )
 
-test('AuthView exists and uses LiquidGlass to wrap a 3D login/register flip card', () => {
+test('AuthView exists and uses a centered 3D login register flip card', () => {
   assert.equal(existsSync(authViewUrl), true)
 
   const authViewSource = readFileSync(authViewUrl, 'utf8')
@@ -21,18 +21,19 @@ test('AuthView exists and uses LiquidGlass to wrap a 3D login/register flip card
   assert.match(authViewSource, /<template>/)
   assert.match(authViewSource, /<script setup>/)
   assert.match(authViewSource, /<style scoped>/)
-  assert.match(authViewSource, /<main\s+class="auth-view relative z-10">/)
-  assert.doesNotMatch(authViewSource, /<main[^>]*global-app-background/)
-  assert.match(authViewSource, /import\s+LiquidGlass\s+from\s+['"]@\/components\/LiquidGlass\.vue['"]/)
-  assert.match(authViewSource, /<LiquidGlass\s+[^>]*mode="shader"[^>]*:displacementScale="40"[^>]*:cornerRadius="24"[^>]*padding="0"/s)
+  assert.match(authViewSource, /<main\s+class="auth-view">/)
+  assert.match(authViewSource, /class="auth-card-wrapper"/)
+  assert.match(authViewSource, /const\s+cardPositionStyle\s*=\s*\{/)
   assert.match(authViewSource, /const\s+isLogin\s*=\s*ref\(/)
-  assert.match(authViewSource, /route\.query\.type\s*===\s*['"]register['"]/)
+  assert.match(authViewSource, /route\.query\.type\s*!==\s*['"]register['"]/)
+  assert.match(authViewSource, /class="flip-scene"/)
+  assert.match(authViewSource, /class="flip-card"/)
   assert.match(authViewSource, /rotateY\(180deg\)/)
   assert.match(authViewSource, /perspective:/)
   assert.match(authViewSource, /backface-visibility:\s*hidden/)
 })
 
-test('AuthView renders Element Plus login and register forms with glass-dark input overrides', () => {
+test('AuthView renders Element Plus login and register forms with light card input overrides', () => {
   assert.equal(existsSync(authViewUrl), true)
 
   const authViewSource = readFileSync(authViewUrl, 'utf8')
@@ -44,28 +45,29 @@ test('AuthView renders Element Plus login and register forms with glass-dark inp
     '<el-button',
     'Welcome',
     'Join Us',
-    '还没加入我们？',
-    '立即注册',
-    '已有账号？',
-    '返回登录',
-    '邮箱地址',
-    '不少于6位'
+    'handleLogin',
+    'handleRegister',
+    'switchMode(false)',
+    'switchMode(true)',
+    'autocomplete="username"',
+    'autocomplete="email"',
+    'autocomplete="new-password"'
   ]) {
     assert.match(authViewSource, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
   }
 
   assert.match(authViewSource, /:deep\(\.el-input__wrapper\)/)
-  assert.match(authViewSource, /background:\s*rgba\(255,\s*255,\s*255,\s*0\.05\)/)
-  assert.match(authViewSource, /color:\s*#fff/)
+  assert.match(authViewSource, /background:\s*#F8F6F3/)
+  assert.match(authViewSource, /border-color:\s*#7EB8DA/)
+  assert.match(authViewSource, /color:\s*var\(--text-primary\)/)
 })
 
 test('router and landing navigation use the unified auth route with query mode', () => {
   assert.match(routerSource, /path:\s*['"]\/auth['"]/)
-  assert.match(routerSource, /import\(['"]@\/views\/AuthView\.vue['"]\)/)
-  assert.match(routerSource, /redirect:\s*\{\s*path:\s*['"]\/auth['"],\s*query:\s*\{\s*type:\s*['"]login['"]/s)
-  assert.match(routerSource, /redirect:\s*\{\s*path:\s*['"]\/auth['"],\s*query:\s*\{\s*type:\s*['"]register['"]/s)
-  assert.match(landingConfigSource, /href:\s*['"]\/auth\?type=login['"]/)
-  assert.match(landingConfigSource, /href:\s*['"]\/auth\?type=register['"]/)
+  assert.match(routerSource, /import\s+AuthView\s+from\s+['"]\.\.\/views\/AuthView\.vue['"]/)
+  assert.match(routerSource, /name:\s*['"]auth['"]/)
+  assert.doesNotMatch(landingConfigSource, /\/login/)
+  assert.doesNotMatch(landingConfigSource, /\/register/)
 })
 
 test('Element Plus is installed and registered globally', () => {

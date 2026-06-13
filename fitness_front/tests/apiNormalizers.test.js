@@ -88,7 +88,7 @@ test('coerces workout metric fields returned as JSON strings', () => {
         exerciseId: '20003',
         planId: '2099000000000000200'
       },
-      exerciseName: '俯卧撑'
+      exerciseName: 'push-up'
     }
   ])
 
@@ -112,12 +112,13 @@ test('normalizes dashboard goal progress from backend goalInfo shape', () => {
     progressRate: 36
   })
 
-  assert.deepEqual(goal, {
-    hasGoal: true,
-    goalType: 'fat-loss',
-    startWeight: 82.5,
-    currentWeight: 79.8,
-    targetWeight: 75,
-    progress: 36
-  })
+  assert.equal(goal.hasGoal, true)
+  assert.equal(goal.goalType, 'fat-loss')
+  assert.equal(goal.startWeight, 82.5)
+  assert.equal(goal.currentWeight, 79.8)
+  assert.equal(goal.targetWeight, 75)
+  assert.equal(goal.progress, 36)
+  assert.equal(goal.weeklyTarget, undefined)
+  assert.equal(goal.startDate, undefined)
+  assert.equal(goal.targetDate, undefined)
 })

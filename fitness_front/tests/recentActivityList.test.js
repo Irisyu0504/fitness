@@ -1,41 +1,37 @@
 import assert from 'node:assert/strict'
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
-const componentUrl = new URL('../src/components/RecentActivityList.vue', import.meta.url)
-const source = existsSync(componentUrl) ? readFileSync(componentUrl, 'utf8') : ''
+const dashboardView = readFileSync(new URL('../src/views/DashboardView.vue', import.meta.url), 'utf8')
 
 const cssBlock = (selector) => {
-  const match = source.match(new RegExp(`${selector.replace('.', '\\.')}\\s*\\{([^}]*)\\}`))
+  const match = dashboardView.match(new RegExp(`${selector.replace('.', '\\.')}\\s*\\{([^}]*)\\}`))
   return match?.[1] ?? ''
 }
 
-test('RecentActivityList exists with workout header and four mock records', () => {
-  assert.ok(existsSync(componentUrl))
-  assert.match(source, /Recent Workouts/)
-  assert.match(source, /View All/)
-  assert.match(source, /const\s+activities\s*=\s*ref\(\[/)
-  assert.match(source, /胸部与三头肌训练/)
-  assert.match(source, /间歇跑训练/)
-  assert.match(source, /力量循环训练/)
-  assert.match(source, /瑜伽拉伸恢复/)
+test('dashboard replaces recent activity list with a goal progress plan card', () => {
+  assert.doesNotMatch(dashboardView, /RecentActivityList/)
+  assert.match(dashboardView, /class="glass-card plan-card"/)
+  assert.match(dashboardView, /goalInfo\.progress !== undefined/)
+  assert.match(dashboardView, /class="progress-track"/)
+  assert.match(dashboardView, /class="progress-fill"/)
+  assert.match(dashboardView, /weeklyTargetText/)
+  assert.match(dashboardView, /daysRemaining/)
 })
 
-test('RecentActivityList uses restrained glass card and spaced flex list items', () => {
-  assert.match(cssBlock('.recent-activity-card'), /background:\s*rgba\(255,\s*255,\s*255,\s*0\.025\)/)
-  assert.match(cssBlock('.recent-activity-card'), /border-radius:\s*24px/)
-  assert.match(cssBlock('.activity-list'), /display:\s*flex/)
-  assert.match(cssBlock('.activity-list'), /flex-direction:\s*column/)
-  assert.match(cssBlock('.activity-list'), /gap:\s*16px/)
-  assert.match(cssBlock('.activity-item:hover'), /background:\s*rgba\(255,\s*255,\s*255,\s*0\.04\)/)
+test('plan card uses compact chips and a pill action instead of list rows', () => {
+  assert.match(cssBlock('.plan-card'), /display:\s*flex/)
+  assert.match(cssBlock('.plan-card'), /flex-direction:\s*column/)
+  assert.match(cssBlock('.plan-chip'), /background:\s*#F8F9FA/)
+  assert.match(cssBlock('.plan-chip'), /border-radius:\s*12px/)
+  assert.match(cssBlock('.plan-action'), /border-radius:\s*999px/)
+  assert.match(cssBlock('.plan-action'), /background:\s*#7EB8DA/)
 })
 
-test('RecentActivityList aligns icon, text, and right calorie metric', () => {
-  assert.match(cssBlock('.activity-icon'), /width:\s*40px/)
-  assert.match(cssBlock('.activity-icon'), /height:\s*40px/)
-  assert.match(cssBlock('.activity-icon'), /border-radius:\s*50%/)
-  assert.match(cssBlock('.activity-title'), /font-size:\s*15px/)
-  assert.match(cssBlock('.activity-time'), /font-size:\s*12px/)
-  assert.match(cssBlock('.activity-calories'), /text-align:\s*right/)
-  assert.match(cssBlock('.activity-calories'), /font-family:\s*'Oswald'/)
+test('plan card keeps progress bar and textual goal summary styling', () => {
+  assert.match(cssBlock('.plan-progress-bar'), /display:\s*flex/)
+  assert.match(cssBlock('.progress-track'), /height:\s*6px/)
+  assert.match(cssBlock('.progress-fill'), /linear-gradient\(90deg,\s*#B8DDEF,\s*#7EB8DA\)/)
+  assert.match(cssBlock('.plan-goal-type'), /font-weight:\s*760/)
+  assert.match(cssBlock('.progress-label'), /color:\s*#7EB8DA/)
 })

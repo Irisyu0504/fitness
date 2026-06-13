@@ -12,21 +12,20 @@ const cssBlock = (selector) => {
   return match?.[1] ?? ''
 }
 
-test('DataCarousel uses a fixed 3D viewport that does not clip coverflow cards', () => {
-  assert.match(dataCarouselVue, /\.carousel-viewport\s*\{[\s\S]*height:\s*180px/)
-  assert.match(dataCarouselVue, /\.carousel-viewport\s*\{[\s\S]*perspective:\s*1000px/)
+test('DataCarousel uses a fixed 3D viewport that does not clip cards', () => {
+  assert.match(dataCarouselVue, /\.carousel-viewport\s*\{[\s\S]*height:\s*140px/)
+  assert.match(dataCarouselVue, /\.carousel-viewport\s*\{[\s\S]*perspective:\s*1120px/)
   assert.match(dataCarouselVue, /\.carousel-viewport\s*\{[\s\S]*overflow:\s*visible/)
   assert.doesNotMatch(cssBlock('.carousel-track'), /display:\s*flex/)
 })
 
 test('DataCarousel cards are absolutely centered and animated in 3D depth', () => {
   assert.match(dataCarouselVue, /\.carousel-item\s*\{[\s\S]*position:\s*absolute/)
-  assert.match(dataCarouselVue, /\.carousel-item\s*\{[\s\S]*left:\s*0/)
-  assert.match(dataCarouselVue, /\.carousel-item\s*\{[\s\S]*right:\s*0/)
+  assert.match(dataCarouselVue, /\.carousel-item\s*\{[\s\S]*inset:\s*0/)
   assert.match(dataCarouselVue, /\.carousel-item\s*\{[\s\S]*margin:\s*auto/)
-  assert.match(dataCarouselVue, /transition:\s*all\s+0\.6s\s+cubic-bezier/)
-  assert.match(dataCarouselVue, /translateZ\(0\)/)
-  assert.match(dataCarouselVue, /translateZ\(-100px\)/)
+  assert.match(dataCarouselVue, /transform 0\.68s cubic-bezier/)
+  assert.match(dataCarouselVue, /translate3d\(0,\s*0,\s*0\)/)
+  assert.match(dataCarouselVue, /translate3d\(\$\{offset \* 58\}%\,\s*8px,\s*-120px\)/)
 })
 
 test('DataCarousel calculates circular offsets and pauses autoplay on hover', () => {
@@ -35,5 +34,5 @@ test('DataCarousel calculates circular offsets and pauses autoplay on hover', ()
   assert.match(dataCarouselVue, /if\s*\(\s*offset\s*<\s*-total\s*\/\s*2\s*\)\s*offset\s*\+=\s*total/)
   assert.match(dataCarouselVue, /@mouseenter="pauseAutoPlay"/)
   assert.match(dataCarouselVue, /@mouseleave="startAutoPlay"/)
-  assert.match(dataCarouselVue, /class="glass-card"/)
+  assert.match(dataCarouselVue, /setInterval\(next,\s*3200\)/)
 })

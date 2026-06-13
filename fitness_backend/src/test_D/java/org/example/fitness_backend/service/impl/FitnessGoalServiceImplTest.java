@@ -6,6 +6,7 @@ import org.example.fitness_backend.entity.BodyRecord;
 import org.example.fitness_backend.entity.FitnessGoal;
 import org.example.fitness_backend.mapper.BodyRecordMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
@@ -84,7 +85,7 @@ class FitnessGoalServiceImplTest {
 
     private TestableFitnessGoalServiceImpl serviceWith(FitnessGoal goal, BodyRecord latestRecord) {
         BodyRecordMapper bodyRecordMapper = mock(BodyRecordMapper.class);
-        when(bodyRecordMapper.selectOne(any(QueryWrapper.class))).thenReturn(latestRecord);
+        when(bodyRecordMapper.selectOne(anyBodyRecordQuery())).thenReturn(latestRecord);
 
         TestableFitnessGoalServiceImpl service = new TestableFitnessGoalServiceImpl(goal);
         ReflectionTestUtils.setField(service, "bodyRecordMapper", bodyRecordMapper);
@@ -103,6 +104,10 @@ class FitnessGoalServiceImplTest {
         BodyRecord record = new BodyRecord();
         record.setWeight(new BigDecimal(weight));
         return record;
+    }
+
+    private QueryWrapper<BodyRecord> anyBodyRecordQuery() {
+        return ArgumentMatchers.<QueryWrapper<BodyRecord>>any();
     }
 
     private static class TestableFitnessGoalServiceImpl extends FitnessGoalServiceImpl {

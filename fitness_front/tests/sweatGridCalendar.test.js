@@ -12,29 +12,29 @@ const cssBlock = (selector) => {
   return match?.[1] ?? ''
 }
 
-test('SweatGrid renders a training calendar header and weekday row', () => {
-  assert.match(sweatGridVue, /Your Training Days/)
-  assert.match(sweatGridVue, /currentMonthLabel/)
+test('SweatGrid renders a training calendar header and localized month label', () => {
+  assert.match(sweatGridVue, /monthLabel/)
   assert.match(sweatGridVue, /weekDays/)
-  assert.match(sweatGridVue, /M',\s*'T',\s*'W',\s*'T',\s*'F',\s*'S',\s*'S/)
+  assert.match(sweatGridVue, /toLocaleDateString\('zh-CN',\s*\{\s*year:\s*'numeric',\s*month:\s*'long'\s*\}\)/)
+  assert.match(sweatGridVue, /class="week-row"/)
 })
 
-test('SweatGrid generates current-month calendar days with done and scheduled states', () => {
+test('SweatGrid generates current month calendar days with done and idle states', () => {
   assert.match(sweatGridVue, /const\s+calendarDays\s*=\s*computed/)
-  assert.match(sweatGridVue, /new\s+Date\(today\.getFullYear\(\),\s*today\.getMonth\(\),\s*1\)/)
-  assert.match(sweatGridVue, /doneDays\.has\(date\)\s*\?\s*'done'/)
-  assert.match(sweatGridVue, /scheduledDays\.has\(date\)\s*\?\s*'scheduled'/)
+  assert.match(sweatGridVue, /const\s+firstDay\s*=\s*new\s+Date\(viewYear\.value,\s*viewMonth\.value,\s*1\)/)
+  assert.match(sweatGridVue, /done\.has\(dateStr\)\s*\?\s*'done'\s*:\s*'idle'/)
+  assert.match(sweatGridVue, /leadingEmpty\s*=\s*\(firstDay\.getDay\(\)\s*\+\s*6\)\s*%\s*7/)
   assert.match(sweatGridVue, /isCurrentDay/)
 })
 
-test('SweatGrid uses a soft dark shell and centered circular day states', () => {
-  assert.match(cssBlock('.sweat-grid-wrapper'), /background:\s*rgba\(0,\s*0,\s*0,\s*0\.15\)/)
+test('SweatGrid uses a transparent shell and centered circular day states', () => {
+  assert.match(cssBlock('.sweat-grid-wrapper'), /background:\s*transparent/)
   assert.match(cssBlock('.sweat-grid-wrapper'), /border-radius:\s*24px/)
-  assert.match(cssBlock('.sweat-grid-wrapper'), /padding:\s*24px/)
+  assert.match(cssBlock('.sweat-grid-wrapper'), /padding:\s*16px/)
   assert.match(cssBlock('.calendar-grid'), /grid-template-columns:\s*repeat\(7,\s*1fr\)/)
   assert.match(cssBlock('.day-status'), /display:\s*grid/)
   assert.match(cssBlock('.day-status'), /place-items:\s*center/)
   assert.match(cssBlock('.day-status.done'), /border-radius:\s*50%/)
-  assert.match(cssBlock('.day-status.done'), /background:\s*#67e8f9/)
-  assert.match(cssBlock('.day-status.current'), /border:\s*1px\s+solid\s+rgba\(103,\s*232,\s*249/)
+  assert.match(cssBlock('.day-status.done'), /background:\s*#7EB8DA/)
+  assert.match(cssBlock('.day-status.current'), /border:\s*2px\s+solid\s+#7EB8DA/)
 })

@@ -8,9 +8,9 @@ import org.example.fitness_backend.entity.WorkoutPlan;
 import org.example.fitness_backend.service.FitnessGoalService;
 import org.example.fitness_backend.service.WorkoutPlanService;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -72,7 +72,7 @@ class FitnessGoalControllerTest {
         existing.setId(10L);
         existing.setUserId(1L);
         when(goalService.getById(10L)).thenReturn(existing);
-        when(workoutPlanService.update(any(WorkoutPlan.class), any(Wrapper.class))).thenReturn(true);
+        when(workoutPlanService.update(any(WorkoutPlan.class), anyGoalWrapper())).thenReturn(true);
         when(goalService.removeById(10L)).thenReturn(true);
 
         Result<String> result = controller.deleteFitnessGoal(10L, requestForUser(1L));
@@ -80,7 +80,7 @@ class FitnessGoalControllerTest {
         assertEquals(200, result.getCode());
         verify(workoutPlanService).update(
                 argThat(plan -> plan.getGoalId() == null),
-                any(Wrapper.class)
+                anyGoalWrapper()
         );
         verify(goalService).removeById(10L);
     }
@@ -115,5 +115,10 @@ class FitnessGoalControllerTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getAttribute("userId")).thenReturn(userId);
         return request;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Wrapper<WorkoutPlan> anyGoalWrapper() {
+        return ArgumentMatchers.<Wrapper<WorkoutPlan>>any();
     }
 }
